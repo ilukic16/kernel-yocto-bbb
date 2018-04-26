@@ -158,8 +158,24 @@ int printk_emit(int facility, int level,
 		const char *dict, size_t dictlen,
 		const char *fmt, ...);
 
+//#define __FILE_NAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+
+// double macro stringy technique
+//#define EXPAND_NUM(x) #x
+//#define STR_NUM(x) EXPAND_NUM(x)
+//#define printk(args...) printk_orig(__FILE__"(" STR_NUM(__LINE__) "): " args)
+
+#define printk(...) /*printk_orig("%s(%d): ", __FILE__, __LINE__)+*/printk_orig(__VA_ARGS__)
+
+//#define printk(args...) printk_orig(__FILE__, __LINE__, args)
+
+
+//#define printk(...) printk_orig(__FILE__, __LINE__, __VA_ARGS__)
+//asmlinkage __printf(3, 4) __cold
+//int printk_orig(const char * file, const size_t line, const char *fmt, ...);
+
 asmlinkage __printf(1, 2) __cold
-int printk(const char *fmt, ...);
+int printk_orig(const char *fmt, ...);
 
 /*
  * Special printk facility for scheduler/timekeeping use only, _DO_NOT_USE_ !

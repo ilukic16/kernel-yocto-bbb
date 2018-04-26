@@ -41,6 +41,8 @@ extern void panic(const char *fmt, ...)
 extern int printk(const char *fmt, ...)
 	__attribute__ ((format (printf, 1, 2)));
 #else
+#define printk(format, args...) printk_orig("%s(%d): " format, __FILE__, __LINE__, ##args)
+
 static inline int printk(const char *fmt, ...)
 {
 	return 0;

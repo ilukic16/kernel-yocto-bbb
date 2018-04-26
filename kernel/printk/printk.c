@@ -1967,10 +1967,17 @@ EXPORT_SYMBOL_GPL(vprintk_default);
  *
  * See the vsnprintf() documentation for format string extensions over C99.
  */
-asmlinkage __visible int printk(const char *fmt, ...)
+//asmlinkage __visible int printk_orig(const char * file, const size_t line, const char *fmt, ...)
+asmlinkage __visible int printk_orig(const char *fmt, ...)
 {
 	va_list args;
 	int r;
+
+//	char buf[strlen(fmt) + strlen(file) + 20];
+//	buf[sizeof buf -1] = 0;
+
+//  snprintf(buf, sizeof buf, "%s(%d): %s", strrchr(file, '/'), line, fmt);
+//  snprintf(buf, sizeof buf, "%s(%d): %s", file, line, fmt);
 
 	va_start(args, fmt);
 	r = vprintk_func(fmt, args);
@@ -1978,7 +1985,7 @@ asmlinkage __visible int printk(const char *fmt, ...)
 
 	return r;
 }
-EXPORT_SYMBOL(printk);
+EXPORT_SYMBOL(printk_orig);
 
 #else /* CONFIG_PRINTK */
 

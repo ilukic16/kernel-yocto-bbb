@@ -1,7 +1,7 @@
 VERSION = 4
 PATCHLEVEL = 8
 SUBLEVEL = 12
-EXTRAVERSION =
+EXTRAVERSION = -ilukic_v0.1_
 NAME = Psychotic Stoned Sheep
 
 # *DOCUMENTATION*
@@ -301,11 +301,13 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = gcc
 HOSTCXX      = g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89
-HOSTCXXFLAGS = -O2
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O1 -fomit-frame-pointer -std=gnu89
+HOSTCXXFLAGS = -O1
 
 ifeq ($(shell $(HOSTCC) -v 2>&1 | grep -c "clang version"), 1)
-HOSTCFLAGS  += -Wno-unused-value -Wno-unused-parameter \
+#HOSTCFLAGS  += -Wno-unused-value -Wno-unused-parameter \
+
+HOSTCFLAGS  += -Wno-unused-parameter \
 		-Wno-missing-field-initializers -fno-delete-null-pointer-checks
 endif
 
@@ -628,9 +630,9 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os
 else
 ifdef CONFIG_PROFILE_ALL_BRANCHES
-KBUILD_CFLAGS	+= -O2
+KBUILD_CFLAGS	+= -O1
 else
-KBUILD_CFLAGS   += -O2
+KBUILD_CFLAGS   += -O1
 endif
 endif
 
